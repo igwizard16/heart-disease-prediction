@@ -435,6 +435,33 @@ if submitted:
     with col2:
         st.progress(min(prob, 1.0))
 
+        # 📊 Risk Visualization Graph
+        import matplotlib.pyplot as plt
+
+        st.markdown("### 📊 Risk Visualization")
+
+        pct = prob * 100
+
+        if pct < 30:
+            color = 'green'
+        elif pct < 60:
+            color = 'orange'
+        else:
+            color = 'red'
+
+        fig, ax = plt.subplots()
+
+        ax.barh(['Risk'], [pct], color=color)
+        ax.set_xlim(0, 100)
+        ax.set_xlabel('Risk Probability (%)')
+        ax.set_title('Heart Disease Risk Level')
+
+        for i, v in enumerate([pct]):
+            ax.text(v + 2, i, f"{v:.1f}%", va='center')
+
+        st.pyplot(fig)
+
+
         if risk_short == "Low":
             st.success("""
 ### 🟢 Low Risk — Great news!
